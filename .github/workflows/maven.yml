@@ -30,8 +30,10 @@ jobs:
       run: > 
         mvn -f com.ciodar.app.ci-example/pom.xml clean verify
         surefire-report:report-only site:site -DgenerateReports=false
+      if: ${{ always()}}
     - name: Archive JUnit Report
       uses: actions/upload-artifact@v2
       with:
         name: surefire-report-jdk-
         path: '**/target/site'
+      if: ${{ always()}}
