@@ -1,0 +1,1 @@
+[![Coverage Status](https://coveralls.io/repos/github/ciodar/ci-example/badge.svg)](https://coveralls.io/github/ciodar/ci-example)
