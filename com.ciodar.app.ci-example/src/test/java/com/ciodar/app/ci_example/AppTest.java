@@ -1,7 +1,8 @@
 package com.ciodar.app.ci_example;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -9,12 +10,14 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
+	private App app;
+	@Before
+	public void setup() {
+		app = new App();
+	}
     @Test
-    public void shouldAnswerWithTrue()
+    public void testSayHello()
     {
-        assertTrue( false );
+        assertEquals("Hello", app.sayHello());
     }
 }
