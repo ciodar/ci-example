@@ -1,1 +1,2 @@
+[![Java CI with Maven in Linux](https://github.com/ciodar/ci-example/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/ciodar/ci-example/actions/workflows/maven.yml)
 [![Coverage Status](https://coveralls.io/repos/github/ciodar/ci-example/badge.svg)](https://coveralls.io/github/ciodar/ci-example)

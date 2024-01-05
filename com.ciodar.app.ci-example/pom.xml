@@ -63,6 +63,7 @@
 				</dependency>
 			</dependencies>
 		</plugin>
+		
       </plugins>
     </pluginManagement>
   </build>
@@ -79,5 +80,23 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+		<id>mutation-testing</id>
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.pitest</groupId><artifactId>pitest-maven</artifactId>
+					<version>1.15.3</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>mutationCoverage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
   </profiles>
 </project>
