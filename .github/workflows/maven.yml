@@ -4,8 +4,10 @@ name: Java CI with Maven in Linux
 
 on:
   push:
+     branches:
+        - master
   pull_request:
-
+      types: [opened, synchronize, reopened]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,7 +24,11 @@ jobs:
               -DpullRequest=${{ github.event.pull_request.number }}}
               coveralls:report
           - java: 11
-
+            additional-maven-args: >
+              -Pjacoco 
+              -DrepoToken=$COVERALLS_REPO_TOKEN
+              -DpullRequest=${{ github.event.pull_request.number }}}
+              sonar:sonar
     name: Build with Java ${{ matrix.java }} on Linux
     steps:
     - uses: actions/checkout@v2
@@ -30,6 +36,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
     - name: Cache Maven packages
       uses: actions/cache@v2
       with:
@@ -38,10 +49,12 @@ jobs:
         restore-keys: ${{ runner.os }}-m2-
     - name: Build with Maven
       run: >
-        mvn clean verify ${{ matrix.additional-maven-args }}
+        mvn verify ${{ matrix.additional-maven-args }}
       working-directory: ${{ env.workdir }}
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+        #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     - name: Generate JUnit Report
       run: >
         mvn surefire-report:report-only site:site -DgenerateReports=false
